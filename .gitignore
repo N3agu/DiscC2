@@ -416,3 +416,9 @@ FodyWeavers.xsd
 *.msix
 *.msm
 *.msp
+
+# GitC2 Server Configuration file
+settings.json
+
+# GitC2 Client Configuration file
+settings.h
